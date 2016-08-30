@@ -38,7 +38,7 @@ PLATFORMS
 
 DEPENDENCIES
   mechanize
-  mongo
+  mongo (~> 2.2)
 
 BUNDLED WITH
    1.12.5
