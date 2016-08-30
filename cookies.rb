@@ -8,7 +8,7 @@ weibo_account = [
      'password' => 'xhnmdl11ER'},
 ]
 
-def get_cookies(weibo_accounts)
+def get_cookies(agent, weibo_accounts)
   cookies = []
   loginURL = 'https://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.15)'
 
@@ -35,12 +35,12 @@ def get_cookies(weibo_accounts)
         'returntype'=> 'TEXT',
     }
 
-    p response = @agent.post(loginURL, post_data)
+    p response = agent.post(loginURL, post_data)
     info = JSON.parse(response.body)
 
     if info['retcode'] == '0'
       print 'Get Cookie Success!( Account:%s )' % account
-      cookie = @agent.cookies
+      cookie = agent.cookies
       cookies << cookie
     else
       print 'Failed!( Reason:%s )' % info['reason']
@@ -50,5 +50,6 @@ def get_cookies(weibo_accounts)
   return cookies
 end
 
-cookies = get_cookies(weibo_account)
-print 'Get Cookies Finish!( Num:%d)' % cookies.length
+# when need to run remove the notation
+# $cookies = get_cookies(Mechanize.new(), weibo_account)
+# print 'Get Cookies Finish!( Num:%d)' % cookies.length
