@@ -2,6 +2,7 @@ require 'mechanize'
 require 'items'
 
 class Spiders
+  attr_reader :agent
   attr_reader :name
   attr_reader :host
   attr_reader :start_urls
@@ -9,6 +10,7 @@ class Spiders
   attr_reader :finish_ID
 
   def initialize
+    @agent = Mechanize.new()
     @name = 'sinaSpider'
     @host = 'http://weibo.cn'
     @start_urls = [5235640836, 5676304901, 5871897095, 2139359753, 5579672076, 2517436943, 5778999829, 5780802073, 2159807003,
@@ -18,8 +20,20 @@ class Spiders
     @scrawl_ID = Set(@start_urls)
     @finish_ID = Set.new()
 
-    def parse_personal_information
+    def parse_personal_information_of_fans
       information_items = InformationItem.new()
+    end
+
+    def parse_personal_information_of_self
+      information_items = InformationItem.new()
+    end
+
+    def parse_tweets_information
+      tweets_items = TweetsItem.new()
+    end
+
+    def parse_fans_and_follows
+      items = Item.new()
     end
   end
 end

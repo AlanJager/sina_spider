@@ -14,8 +14,8 @@ def get_cookies(agent, weibo_accounts)
 
   weibo_accounts.each do |e|
     account = e['username']
-    p password = e['password']
-    p username = Base64.strict_encode64(account)
+    password = e['password']
+    username = Base64.strict_encode64(account)
     post_data = {
         'entry'=> 'sso',
         'gateway'=> '1',
@@ -40,8 +40,7 @@ def get_cookies(agent, weibo_accounts)
 
     if info['retcode'] == '0'
       print 'Get Cookie Success!( Account:%s )' % account
-      cookie = agent.cookies
-      cookies << cookie
+      cookies << agent.cookies
     else
       print 'Failed!( Reason:%s )' % info['reason']
     end
