@@ -4,8 +4,7 @@ require 'json'
 require 'base64'
 
 weibo_account = [
-    {'username' => '13408023291',
-     'password' => 'xhnmdl11ER'},
+    # add your account here
 ]
 
 def get_cookies(agent, weibo_accounts)
