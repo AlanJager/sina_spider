@@ -1,5 +1,5 @@
 require 'mechanize'
-require 'items'
+require_relative 'middleware'
 
 class Spiders
   attr_reader :agent
@@ -17,23 +17,36 @@ class Spiders
                    1756807885, 3378940452, 5762793904, 1885080105, 5778836010, 5722737202, 3105589817, 5882481217, 5831264835,
                    2717354573, 3637185102, 1934363217, 5336500817, 1431308884, 5818747476, 5073111647, 5398825573, 2501511785,
                   ]
-    @scrawl_ID = Set(@start_urls)
+    @scrawl_ID = Set.new(@start_urls)
     @finish_ID = Set.new()
+    # UserAgentMiddleWare.new().process_request(@agent)
+    # CookiesMiddleWare.new().process_request(@agent)
+    # @agent.cookie_jar.load_cookiestxt('cookies.txt') 
+  end
 
-    def parse_personal_information_of_fans
-      information_items = InformationItem.new()
-    end
+  def starts_request
+    url_information0 = "http://weibo.cn/%s/follow" % '2029177923'
+    p page = Mechanize.new().get(url_information0)
+    # parse_personal_information_of_fans(@agent.get('http://weibo.cn/moegirlwiki'))
+  end
 
-    def parse_personal_information_of_self
-      information_items = InformationItem.new()
-    end
+  def parse_personal_information_of_fans(page)
+    num_tweets = (page.search('div.u div.tip2 span.tc') =~ /\d/)
+    # num_follows = (page.search('div.u div.tip2 a').first =~ /\d/)
+    # num_fans = (page.search('div.u div.tip2 a').second =~ /\d/)
+  end
 
-    def parse_tweets_information
-      tweets_items = TweetsItem.new()
-    end
+  def parse_personal_information_of_self(page)
+    information_items = InformationItem.new()
+  end
 
-    def parse_fans_and_follows
-      items = Item.new()
-    end
+  def parse_tweets_information(page)
+    tweets_items = TweetsItem.new()
+  end
+
+  def parse_fans_and_follows
+    items = Item.new()
   end
 end
+
+Spiders.new().starts_request
