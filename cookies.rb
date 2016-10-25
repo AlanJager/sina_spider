@@ -6,8 +6,8 @@ require_relative 'log'
 
 weibo_account = [
     # add your account here
-    'username' => '13408023291',
-    'password' => 'xhnmdl11ER'
+    'username' => '',
+    'password' => ''
 ]
 
 def get_cookies(agent, weibo_accounts)
