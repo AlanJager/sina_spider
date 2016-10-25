@@ -12,16 +12,18 @@ class Spiders
   def initialize
     @agent = Mechanize.new()
     @name = 'sinaSpider'
-    @host = 'http://weibo.cn'
+    @host = 'http://m.weibo.cn/'
     @start_urls = [5235640836, 5676304901, 5871897095, 2139359753, 5579672076, 2517436943, 5778999829, 5780802073, 2159807003,
                    1756807885, 3378940452, 5762793904, 1885080105, 5778836010, 5722737202, 3105589817, 5882481217, 5831264835,
                    2717354573, 3637185102, 1934363217, 5336500817, 1431308884, 5818747476, 5073111647, 5398825573, 2501511785,
                   ]
     @scrawl_ID = Set.new(@start_urls)
     @finish_ID = Set.new()
-    # UserAgentMiddleWare.new().process_request(@agent)
+    UserAgentMiddleWare.new().process_request(@agent)
     # CookiesMiddleWare.new().process_request(@agent)
-    # @agent.cookie_jar.load_cookiestxt('cookies.txt') 
+    @agent.cookie_jar.load_cookiestxt('cookies.txt')
+    url_information0 = "http://weibo.cn/%s/follow" % '2029177923'
+    p page = @agent.get(url_information0)
   end
 
   def starts_request
@@ -49,4 +51,4 @@ class Spiders
   end
 end
 
-Spiders.new().starts_request
+Spiders.new()#.starts_request
