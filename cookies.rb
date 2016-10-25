@@ -2,9 +2,12 @@
 require 'mechanize'
 require 'json'
 require 'base64'
+require_relative 'log'
 
 weibo_account = [
     # add your account here
+    'username' => '13408023291',
+    'password' => 'xhnmdl11ER'
 ]
 
 def get_cookies(agent, weibo_accounts)
@@ -34,11 +37,11 @@ def get_cookies(agent, weibo_accounts)
         'returntype'=> 'TEXT',
     }
 
-    p response = agent.post(loginURL, post_data)
+    response = agent.post(loginURL, post_data)
     info = JSON.parse(response.body)
 
     if info['retcode'] == '0'
-      print 'Get Cookie Success!( Account:%s )' % account
+      print "Get Cookie Success!( Account:%s ) \n" % account
       cookies << agent.cookies
     else
       print 'Failed!( Reason:%s )' % info['reason']
@@ -48,6 +51,16 @@ def get_cookies(agent, weibo_accounts)
   return cookies
 end
 
+def save_cookies(cookies)
+  cookies_file = File.open("cookies.txt", "w+")
+  cookies.each do |line|
+    general_log("writing")
+    cookies_file.syswrite(".weibo.cn  / FALSE  " + line.to_s.slice(0, line.to_s.index('=')) + 
+                          " " + line.to_s.slice(line.to_s.index('='), line.to_s.length) + "\n")
+  end
+  cookies_file.close
+end
 # when need to run remove the notation
-# $cookies = get_cookies(Mechanize.new(), weibo_account)
+$cookies = get_cookies(Mechanize.new(), weibo_account)
 # print 'Get Cookies Finish!( Num:%d)' % cookies.length
+save_cookies($cookies.first)
